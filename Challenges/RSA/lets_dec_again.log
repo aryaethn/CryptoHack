@@ -1,0 +1,78 @@
+/Users/aria/Desktop/CryptoHack/Challenges/RSA/lets_dec_again.py:199: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  print(f"=== lets_dec_again_v2 started at {datetime.utcnow().isoformat()}Z ===")
+=== lets_dec_again_v2 started at 2025-11-09T09:58:58.220659Z ===
+[*] Session attempt 1
+[*] Elapsed: 0.3s, attempts=0
+Traceback (most recent call last):
+  File "/Users/aria/Desktop/CryptoHack/Challenges/RSA/lets_dec_again.py", line 200, in <module>
+    main()
+  File "/Users/aria/Desktop/CryptoHack/Challenges/RSA/lets_dec_again.py", line 188, in main
+    flag = try_one_session(attempt)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aria/Desktop/CryptoHack/Challenges/RSA/lets_dec_again.py", line 111, in try_one_session
+    N_srv, E_srv, S_sig = get_signature_from_server()
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aria/Desktop/CryptoHack/Challenges/RSA/lets_dec_again.py", line 87, in get_signature_from_server
+    with socket.create_connection((HOST, PORT), timeout=10) as sock:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aria/miniforge3/lib/python3.12/socket.py", line 865, in create_connection
+    raise exceptions[0]
+  File "/Users/aria/miniforge3/lib/python3.12/socket.py", line 850, in create_connection
+    sock.connect(sa)
+OSError: [Errno 49] Can't assign requested address
+/Users/aria/Desktop/CryptoHack/Challenges/RSA/lets_dec_again.py:199: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  print(f"=== lets_dec_again_v2 started at {datetime.utcnow().isoformat()}Z ===")
+=== lets_dec_again_v2 started at 2025-11-09T10:01:16.094926Z ===
+[*] Session attempt 1
+[net] banner: This server validates statements we make for you. Present your messages and public key, and if the signature matches ours, you must undoubtably be us. Just do it multiple times to make sure...
+[net] get_signature JSON: {'N': '0xdf92d641fcbf54db8b0af2fc70adc865fa04b66a6ccd87475cb936e2be800ac1c298dbedcb122f6b6e507691cc795789acbeffefaf39f2c8de7c71db7ada2173d6fdf449c8dd23d114e3b810849f1d8b80a4008c5cb611b33cbe0391bb536501', 'E': '0x10001', 'signature': '0x910f5f4fd7f0f5408711f577ac68bd24ede89d948681298a29d3d2094d13dbc24872bcaa37ccce91c35366ee2f3dd5324f68d33be48a7f0f10beb280f326fbabe2cc7c2fd343c57212f9aae481192144592338ecd2de2351289c383c1490f0d2'}
+[i] Server: Nbits=768 E=65537 hash=SHA1
+[*] Elapsed: 0.9s, attempts=0
+Traceback (most recent call last):
+  File "/Users/aria/Desktop/CryptoHack/Challenges/RSA/lets_dec_again.py", line 200, in <module>
+    main()
+  File "/Users/aria/Desktop/CryptoHack/Challenges/RSA/lets_dec_again.py", line 188, in main
+    flag = try_one_session(attempt)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aria/Desktop/CryptoHack/Challenges/RSA/lets_dec_again.py", line 115, in try_one_session
+    N_user, (p, PF), (q, QF) = build_modulus_for_signature(S_sig)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aria/Desktop/CryptoHack/Challenges/RSA/lets_dec_again.py", line 51, in build_modulus_for_signature
+    raise RuntimeError("Hook me into your existing build_modulus_for_signature")
+RuntimeError: Hook me into your existing build_modulus_for_signature
+/Users/aria/Desktop/CryptoHack/Challenges/RSA/lets_dec_again.py:522: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  print(f"=== lets_dec_again_v2 started at {datetime.utcnow().isoformat()}Z ===")
+=== lets_dec_again_v2 started at 2025-11-09T10:08:54.350279Z ===
+[*] Session attempt 1
+[net] send (get_signature): {'option': 'get_signature'}
+[net] banner: This server validates statements we make for you. Present your messages and public key, and if the signature matches our
+[net] get_signature JSON: {'N': '0xdf92d641fcbf54db8b0af2fc70adc865fa04b66a6ccd87475cb936e2be800ac1c298dbedcb122f6b6e507691cc795789acbeffefaf39f2c8de7c71db7ada2173d6fdf449c8dd23d114e3b810849f1d8b80a4008c5cb611b33cbe0391bb536501', 'E': '0x10001', 'signature': '0x910f5f4fd7f0f5408711f577ac68bd24ede89d948681298a29d3d2094d13dbc24872bcaa37ccce91c35366ee2f3dd5324f68d33be48a7f0f10beb280f326fbabe2cc7c2fd343c57212f9aae481192144592338ecd2de2351289c383c1490f0d2'}
+[*] Elapsed: 1.0s, attempts=0
+Traceback (most recent call last):
+  File "/Users/aria/Desktop/CryptoHack/Challenges/RSA/lets_dec_again.py", line 523, in <module>
+    main()
+  File "/Users/aria/Desktop/CryptoHack/Challenges/RSA/lets_dec_again.py", line 190, in main
+    flag = try_one_session(attempt)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aria/Desktop/CryptoHack/Challenges/RSA/lets_dec_again.py", line 462, in try_one_session
+    hash_name = detect_hash(S_sig, N_srv, E_srv)
+                ^^^^^^^^^^^
+NameError: name 'detect_hash' is not defined
+/Users/aria/Desktop/CryptoHack/Challenges/RSA/lets_dec_again.py:457: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  print(f"=== lets_dec_again_v2 started at {datetime.utcnow().isoformat()}Z ===")
+=== lets_dec_again_v2 started at 2025-11-09T10:09:52.999710Z ===
+[*] Session attempt 1
+[net] banner: This server validates statements we make for you. Present your messages and public key, and if the signature matches ours, you must undoubtably be us. Just do it multiple times to make sure...
+[net] get_signature JSON: {'N': '0xdf92d641fcbf54db8b0af2fc70adc865fa04b66a6ccd87475cb936e2be800ac1c298dbedcb122f6b6e507691cc795789acbeffefaf39f2c8de7c71db7ada2173d6fdf449c8dd23d114e3b810849f1d8b80a4008c5cb611b33cbe0391bb536501', 'E': '0x10001', 'signature': '0x910f5f4fd7f0f5408711f577ac68bd24ede89d948681298a29d3d2094d13dbc24872bcaa37ccce91c35366ee2f3dd5324f68d33be48a7f0f10beb280f326fbabe2cc7c2fd343c57212f9aae481192144592338ecd2de2351289c383c1490f0d2'}
+[i] Server: Nbits=768 E=65537 hash=SHA1
+[*] Elapsed: 1.0s, attempts=0
+Traceback (most recent call last):
+  File "/Users/aria/Desktop/CryptoHack/Challenges/RSA/lets_dec_again.py", line 458, in <module>
+    main()
+  File "/Users/aria/Desktop/CryptoHack/Challenges/RSA/lets_dec_again.py", line 190, in main
+    flag = try_one_session(attempt)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/aria/Desktop/CryptoHack/Challenges/RSA/lets_dec_again.py", line 117, in try_one_session
+    N_user, (p, PF), (q, QF) = build_modulus(S_sig)
+                               ^^^^^^^^^^^^^^^^^^^^
+TypeError: build_modulus() takes 0 positional arguments but 1 was given
