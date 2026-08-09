@@ -1,0 +1,343 @@
+#!/usr/bin/env sage
+"""
+CryptoHack :: Isogenies :: "Breaking SIDH" (250)
+
+Recover the SIDH shared secret from public data alone, using the 2022
+polynomial-time break (Castryck-Decru / Maino-Martindale-Panny-Pope-Wesolowski
+/ Robert).  This is the one-shot Kani form of the attack: no key guessing, no
+search over auxiliary isogenies, a single (2,2)-isogeny chain.
+
+Dependency: richelot_aux.py, the genus-2 Richelot machinery from
+    https://github.com/GiacomoPope/Castryck-Decru-SageMath   (MIT licence,
+    (c) 2023 Giacomo Pope, Remy Oudompheng, Lorenz Panny)
+It provides Does22ChainSplit, which runs a chain of (2,2)-isogenies starting
+from a product of elliptic curves and returns the chain as composable maps
+together with the split codomain.  Everything else here is the attack proper.
+
+
+Why SIDH falls
+--------------
+The pure isogeny problem -- given E0 and EB, find the isogeny between them --
+is not known to be broken.  SIDH does not hand you that problem.  To make the
+key exchange work, Bob must publish the images of Alice's torsion basis,
+phiB(P2) and phiB(Q2).  That auxiliary torsion information is the crack.
+
+Kani's criterion.  Suppose we have two isogenies out of E0,
+
+    phi : E0 -> EB   of degree d,        gamma : E0 -> E0   of degree e,
+
+with d + e = N and gcd(d, e) = 1.  Then there is an (N,N)-isogeny of abelian
+surfaces
+
+    F : EB x E0 -> E0 x E3,
+    ker F = { (phi(R), gamma(R)) : R in E0[N] }
+          = < (phi(P2), gamma(P2)), (phi(Q2), gamma(Q2)) >,
+
+and -- this is the content of the criterion -- its codomain is a *product* of
+elliptic curves, not a generic Jacobian.  So the chain "splits".
+
+Now look at what ker F is made of.  phi(P2) and phi(Q2) are exactly the torsion
+images Bob published.  gamma we build ourselves.  So the kernel is entirely
+public, F is computable with no guessing, and evaluating F recovers phi.
+
+Building gamma.  E0 : y^2 = x^3 + x has j = 1728 and the extra automorphism
+
+    iota(x, y) = (-x, i*y),      iota^2 = [-1]
+
+(check: (-x)^3 + (-x) = -(x^3+x) = -y^2 = (i*y)^2).  So Z[iota] = Z[sqrt(-1)]
+sits inside End(E0), and for integers a, b
+
+    gamma = [a] + [b] o iota    has    deg gamma = a^2 + b^2.
+
+We therefore need e = N - d = 2^ea - 3^eb to be a sum of two squares.
+
+This is where the challenge's unusual prime earns its keep.  With the textbook
+SIDH prime p = 2^ea*3^eb - 1 one has 2^ea ~ 3^eb, so N - d is small and there is
+no reason for it to be a norm.  Here p = 45*2^117*3^73 - 1 was chosen so that
+
+    e = 2^117 - 3^73 = 98568300838296960877455438910725149
+
+is *prime* and = 1 mod 4, hence a sum of two squares by Fermat.  That is the
+"deliberately chosen to simplify the attack" note: it collapses the attack to a
+single chain.  Without it one guesses key digits and uses splitting as an
+oracle, which is the original Castryck-Decru procedure.
+
+Sanity check on the kernel, before running anything expensive: the product Weil
+pairing of the two generators is
+
+    e_N(phi(P2), phi(Q2)) * e_N(gamma(P2), gamma(Q2))
+        = e_N(P2,Q2)^d * e_N(P2,Q2)^e = e_N(P2,Q2)^(d+e) = e_N(P2,Q2)^N = 1,
+
+so the kernel is isotropic exactly because d + e = N.  If that fails, nothing
+downstream can work.
+
+Extracting the secret
+---------------------
+F(U, O) = (phihat(U), *), so the first component of the chain evaluated at
+(U, O) is the dual isogeny phihat : EB -> E0, up to the identification of the
+codomain factor with E0.  For U in EB[3^eb],
+
+    phi(phihat(U)) = [3^eb] U = O    =>    phihat(U) in ker phi.
+
+ker phi is cyclic of order 3^eb, so any such image of full order generates it.
+
+One wrinkle: the codomain factor is only isomorphic to E0, and Aut(E0) has
+order 4 ({+-1, +-iota}) because j = 1728.  So the recovered generator is
+determined only up to iota, giving two candidate kernels <K> and <iota(K)>.
+We simply test both against the public EB -- a decisive check, not a guess.
+
+Finally, ker phi = <P3 + [sB] Q3>, so writing the recovered generator as
+[alpha]P3 + [beta]Q3 (two Weil-pairing discrete logs in the smooth group
+mu_{3^73}) gives sB = beta/alpha, and the shared secret is
+
+    j( EA / < phiA(P3) + [sB] phiA(Q3) > ).
+"""
+
+import time
+from richelot_aux import Does22ChainSplit
+
+from Crypto.Cipher import AES
+from Crypto.Hash import SHA256
+from Crypto.Util.Padding import unpad
+
+# ---------------------------------------------------------------------------
+# Public data (verbatim from source_breaking_sidh.sage)
+# ---------------------------------------------------------------------------
+
+f, ea, eb = 45, 117, 73
+p = f * 2**ea * 3**eb - 1
+F = GF(p**2, names="i", modulus=[1, 0, 1])
+i = F.gen()
+
+E0 = EllipticCurve(F, [1, 0])
+
+P2 = E0(41638913017947770142057706586022928767376787911881052119498505735726709*i + 42302691118463190267789836743381974415789982933013793177648925959412830, 398449090103547450120756760379594152224190852334260435573814509309180322*i + 233727912055570344238170576715487571464638389819881232356163774868717298)
+Q2 = E0(206871044564057174074702402057560500385307897843892757429570895488690781*i + 345361103047041832006854423588672657209780675425156486637093636756615871, 282631959619596644195862856762358013067369927756734494353761273142886198*i + 424042212353240809393676298236811630816767068488333281198829926787994817)
+P3 = E0(283521037412897973446265653799790187322986891540188206463957119516634991*i + 54836870836833212880150277757892094716552831163383470059384919428256731, 161092808075362244162644980545740896186924081971711047761724742595133944*i + 197849415496275495990937264988931290383245818223505983906164366276638868)
+Q3 = E0(170277682213687313511268961329652085176588846737029816748389863411297316*i + 110089263347312130053961094497783417490346085079501067635398757092208463, 198706722901789469217115416185417389094489501048971022152415817993951671*i + 257742376830499988002294097301881965831489887177374506301544311076566391)
+
+EAa = 341962904043010047547037514847227313183414494665183661406956171643838238*i+466221816892334489710400228219157166377700467211697103422573316531708902
+EAb = 145050307288456998377054421680667611887270583594997309677606837459597101*i+356616269078165763297060128562598654455817286639025312561154777133108454
+EA = EllipticCurve(F, [EAa, EAb])
+phiA_P3 = EA(180748165080544728482273627011017446820851964671689844940751613607027042*i + 386399657558539814871631131488087670882259175999167407491042206165954470, 327787397151786462956783797299341040567085054575313609836298710436619785*i + 196105866987178697015232911678783180764030519956520455354300809913687633)
+phiA_Q3 = EA(258847568494100760477286708131798122974987254057932346978697593107825530*i + 38490496870779580975180675248455270468746617165569920252532162902409675, 306358844762893197793766376830898073944594560219460755063030400129179690*i + 182510704835708623157232097040016637690000728438765134566515343181898854)
+
+EBa = 157597846018840576315827348546173953758796122446152006870494733059078284*i+418874181143594794621438950780746815165757267567012420151805770819363162
+EBb = 348442605611456141157838566652599367279127166743233127676107176086957458*i+420861724499942691978671729713269838482830342041809365231340529697579831
+EB = EllipticCurve(F, [EBa, EBb])
+phiB_P2 = EB(109886154562978369974676578144987934657805602134271866282447816334164466*i + 498136804583811803693793430218572265900633458962105597996566642692906940, 401907510168736586072062757459383110335655309941214043767511647670013113*i + 259294509134396545471598619471155420455160713238944617603235341590681170)
+phiB_Q2 = EB(273276717406517362983403161180051140354308241184578465602742126078679674*i + 164406415263418135648467271613257338667532330432266713670747057596335763, 1092247214699018416365584399170122624205811861075813640384878660598131*i + 354817717070268141803451242665805576947926358877574336158195333352961708)
+
+iv_hex = 'f45273daf12b8234bd41607d8b517913'
+ct_hex = '65917ae4d3de3ba753d50bab78992b2239cb189493807fcc3da8d058da1eda7d993c041d0ecb09089808d759a982f087'
+
+N, d = 2**ea, 3**eb
+
+
+# ---------------------------------------------------------------------------
+# Velu + chaining (as in the earlier challenges), used for verification and
+# for the final shared-secret isogeny.
+# ---------------------------------------------------------------------------
+
+def velu(E, T):
+    a1, a2, a3, a4, a6 = E.a_invariants()
+    assert (a1, a2, a3) == (0, 0, 0)
+    Fld = E.base_field()
+    O = E(0)
+
+    R, seen = [], set()
+    Q = T
+    while Q != O:
+        if Q not in seen:
+            R.append(Q)
+            seen.add(Q)
+            seen.add(-Q)
+        Q = Q + T
+
+    data, v_sum, w_sum = [], Fld(0), Fld(0)
+    for Q in R:
+        xQ, yQ = Q.xy()
+        gx = 3 * xQ**2 + a4
+        vQ = gx if yQ == 0 else 2 * gx
+        uQ = 4 * yQ**2
+        data.append((xQ, uQ, vQ))
+        v_sum += vQ
+        w_sum += uQ + xQ * vQ
+
+    Ecod = EllipticCurve(Fld, [a4 - 5 * v_sum, a6 - 7 * w_sum])
+    kernel_x = {xQ for xQ, _, _ in data}
+
+    def evaluate(P):
+        if P == O:
+            return Ecod(0)
+        x, y = P.xy()
+        if x in kernel_x:
+            return Ecod(0)
+        X, dX = x, Fld(1)
+        for xQ, uQ, vQ in data:
+            dd = x - xQ
+            d2 = dd * dd
+            X += vQ / dd + uQ / d2
+            dX -= vQ / d2 + 2 * uQ / (d2 * dd)
+        return Ecod(X, y * dX)
+
+    return Ecod, evaluate
+
+
+def isogeny_chain(E, K, l, e, push=()):
+    assert K.order() == l**e
+    Ecur, Kcur, pushed = E, K, list(push)
+    for j in range(e):
+        T = (l**(e - 1 - j)) * Kcur
+        Ecur, evaluate = velu(Ecur, T)
+        pushed = [evaluate(X) for X in pushed]
+        if j < e - 1:
+            Kcur = evaluate(Kcur)
+    return Ecur, pushed
+
+
+# ---------------------------------------------------------------------------
+# Step 1: build gamma = [a] + [b]*iota  of degree e = N - d
+# ---------------------------------------------------------------------------
+
+print("=" * 74)
+print("Breaking SIDH  --  one-shot Kani attack")
+print("=" * 74)
+
+e = N - d
+assert is_prime(e) and e % 4 == 1, "e must be a norm from Z[i]"
+a, b = two_squares(e)
+assert a * a + b * b == e
+print(f"  N = 2^{ea}, d = 3^{eb},  e = N - d = {e}")
+print(f"  e = {a}^2 + {b}^2")
+
+
+def iota(P):
+    x, y = P.xy()
+    return E0(-x, i * y)
+
+
+def gamma(P):
+    return a * P + b * iota(P)
+
+
+# iota really is an endomorphism with iota^2 = [-1]
+_T = E0.random_point()
+assert iota(iota(_T)) == -_T, "iota^2 != [-1]"
+
+gP2, gQ2 = gamma(P2), gamma(Q2)
+assert P2.order() == Q2.order() == N
+assert phiB_P2.order() == phiB_Q2.order() == N
+assert gP2.order() == gQ2.order() == N
+
+# the kernel is isotropic precisely because d + e = N
+pairing = phiB_P2.weil_pairing(phiB_Q2, N) * gP2.weil_pairing(gQ2, N)
+assert pairing == 1, "kernel is not isotropic -- no (N,N)-isogeny exists"
+print("  [ok] kernel < (phiB(P2), gamma(P2)), (phiB(Q2), gamma(Q2)) > is isotropic")
+
+
+# ---------------------------------------------------------------------------
+# Step 2: run the (2,2)-chain.  Kani guarantees it splits.
+# ---------------------------------------------------------------------------
+
+print(f"\n[*] running the (2,2)-chain of length {ea} on EB x E0 ...")
+t0 = time.time()
+result = Does22ChainSplit(EB, E0, phiB_P2, phiB_Q2, gP2, gQ2, ea)
+assert result is not None, "chain did not split -- kernel is wrong"
+chain, (C1, C2) = result
+print(f"    [ok] SPLIT in {time.time() - t0:.1f}s")
+print(f"    codomain factors have j = {C1.j_invariant()}  and  j = {C2.j_invariant()}")
+assert 1728 in (C1.j_invariant(), C2.j_invariant()), "no factor isomorphic to E0"
+
+
+def F(X, Y):
+    """Evaluate the chain on (X, Y) in EB x E0.  None denotes the identity."""
+    D = chain[0]((X, Y))
+    for m in chain[1:-1]:
+        D = m(D)
+    return chain[-1](D)
+
+
+# ---------------------------------------------------------------------------
+# Step 3: F(U, O) = (phihat_B(U), *) lands in ker(phi_B) for U in EB[3^eb]
+# ---------------------------------------------------------------------------
+
+print("\n[*] evaluating the chain to recover ker(phi_B) ...")
+cofactor = (p + 1) // d          # (p+1) = 2^117 * 3^75 * 5
+
+K = None
+for _ in range(40):
+    U = cofactor * EB.random_point()
+    if U.order() != d:
+        continue
+    for W, C in zip(F(U, None), (C1, C2)):
+        if C.j_invariant() != E0.j_invariant() or W.order() != d:
+            continue
+        K = C.isomorphism_to(E0)(W)
+        break
+    if K is not None:
+        break
+
+assert K is not None and K.order() == d, "failed to recover a kernel generator"
+print(f"    [ok] candidate generator of order 3^{eb} recovered")
+
+
+# ---------------------------------------------------------------------------
+# Step 4: resolve the Aut(E0) ambiguity against the public EB, then read off sB
+# ---------------------------------------------------------------------------
+
+jEB = EB.j_invariant()
+
+# Careful: the j-invariant test CANNOT separate the two candidates.  iota is an
+# automorphism of E0, so it carries <K> to <iota(K)> and hence E0/<K> and
+# E0/<iota(K)> are always isomorphic -- both candidates reproduce j(EB).  The
+# check below is therefore only a soundness check on the attack, not a
+# discriminator.  The actual discriminator is the decryption itself.
+candidates = [("K", K), ("iota(K)", iota(K))]
+for name, cand in candidates:
+    Ecod, _ = isogeny_chain(E0, cand, 3, eb)
+    ok = Ecod.j_invariant() == jEB
+    print(f"    E0/<{name}>  reproduces j(EB): {ok}")
+    assert ok, "candidate does not reproduce EB -- attack is wrong"
+
+
+def secret_from(KB):
+    """KB = [alpha]P3 + [beta]Q3 ; ker(phi_B) = <P3 + [sB]Q3>  =>  sB = beta/alpha."""
+    w = P3.weil_pairing(Q3, d)
+    alpha = discrete_log(KB.weil_pairing(Q3, d), w, d, operation='*')
+    beta = discrete_log(P3.weil_pairing(KB, d), w, d, operation='*')
+    return ZZ(beta) * ZZ(alpha).inverse_mod(d) % d
+
+
+# ---------------------------------------------------------------------------
+# Step 5: complete Bob's side of the exchange and decrypt
+# ---------------------------------------------------------------------------
+
+flag = None
+for name, cand in candidates:
+    sB = secret_from(cand)
+    assert (P3 + sB * Q3).order() == d
+
+    KS = phiA_P3 + sB * phiA_Q3
+    E_S, _ = isogeny_chain(EA, KS, 3, eb)
+    shared_secret = E_S.j_invariant()
+
+    key = SHA256.new(data=str(shared_secret).encode()).digest()[:128]
+    pt = AES.new(key, AES.MODE_CBC, bytes.fromhex(iv_hex)).decrypt(bytes.fromhex(ct_hex))
+    try:
+        pt = unpad(pt, 16)
+    except ValueError:
+        print(f"\n  candidate from {name}: sB = {sB}  ->  padding failed")
+        continue
+    if not pt.startswith(b"crypto{"):
+        print(f"\n  candidate from {name}: sB = {sB}  ->  not a flag")
+        continue
+
+    print(f"\n  RECOVERED Bob's secret key:  sB = {sB}   (from {name})")
+    print(f"  shared secret j = {shared_secret}")
+    flag = pt
+    break
+
+assert flag is not None, "neither candidate decrypted the flag"
+print()
+print(f"FLAG = {flag.decode()}")
