@@ -1,0 +1,144 @@
+#!/usr/bin/env sage
+"""
+CryptoHack :: Isogenies :: "Better than Linear" (85)
+
+E : y^2 = x^3 + x over F_{p^2},  p = 92935740571,
+K = (11428792286*i + 6312697112, 78608501229*i + 30552079595).
+Compute the isogeny with kernel <K> and report j of the codomain.
+
+Why Velu cannot do this
+-----------------------
+Here p + 1 = 2^2 * 23233935143 and ord(K) = l = 23233935143, a 35-bit prime.
+
+Velu's formulas sum over one representative of each pair {Q, -Q} in the kernel,
+so their cost is (l-1)/2 ~ 1.2 * 10^10 point additions and field inversions.
+That is linear in the *degree*, hence exponential in the input size, and it is
+simply not going to finish.  Every earlier challenge in this category hid that
+fact behind smooth degrees: 3^13 and 2^216 look big but factor into hundreds of
+tiny steps.  A large *prime* degree has no such factorisation to exploit.
+
+sqrt(elu)
+---------
+Bernstein, De Feo, Leroux and Smith (ANTS 2020) get the cost down to
+O~(sqrt(l)).  The idea:
+
+Velu needs the kernel polynomial  h(X) = prod_{s in S} (X - x([s]K))  over an
+index set S covering each {s, -s} pair once, and more generally needs to
+evaluate such products at points.  Evaluating a product of l/2 linear factors
+one at a time is the bottleneck.  Instead, write the index set as a sum
+
+    S = I + J   (plus a small leftover K'),   |I| ~ |J| ~ sqrt(l)/2,
+
+using   I = {2b(2i+1) : 0 <= i < b'},   J = {2j+1 : 0 <= j < b},   b ~ sqrt(l)/2.
+Every index in S is uniquely i +- j.  The pay-off is that x([i+j]K) and
+x([i-j]K) satisfy a *biquadratic* relation with x([i]K) and x([j]K): there are
+polynomials F0, F1, F2 with
+
+    (X - x([i+j]K))(X - x([i-j]K))
+        = X^2 + (F1(x[i], x[j])/F0(...)) X + F2(...)/F0(...)
+
+so the double product over i in I, j in J is a resultant of two polynomials of
+degree only ~sqrt(l):
+
+    prod_{i,j} (biquadratic in X) = Res_Z( h_I(Z), E_J(Z, X) ).
+
+Resultants of degree-n polynomials cost O~(n) field operations with a product
+tree, so the whole isogeny costs O~(sqrt(l)) instead of O(l).  Here that is
+~1.5 * 10^5 rather than ~1.2 * 10^10 -- a factor of about 80000.
+
+This script uses Sage's EllipticCurveHom_velusqrt, which is exactly the BDLS
+algorithm, and then verifies the result independently.
+
+On verification
+---------------
+Cross-checking against plain Velu is impossible at this degree, which is the
+whole point, so the checks below are structural instead:
+
+  * deg phi = l  and  phi(K) = O               (it is the right isogeny)
+  * running it again from a *different* generator of the same subgroup, [c]K
+    for several c coprime to l, must give the same codomain j-invariant -- the
+    isogeny depends only on the kernel subgroup, not on which generator names it
+  * the codomain is supersingular with #E' = (p+1)^2, as any isogenous curve
+    must be
+  * the Weil pairing on the 4-torsion satisfies e_4(phi S, phi T) = e_4(S,T)^l,
+    an independent read-out of the degree that never touches the codomain's
+    curve equation
+"""
+
+import time
+
+p = 92935740571
+assert is_prime(p) and p % 4 == 3
+
+F = GF(p**2, name="i", modulus=[1, 0, 1])
+i = F.gen()
+
+E = EllipticCurve(F, [1, 0])                    # y^2 = x^3 + x
+assert E.is_supersingular()
+assert E.order() == (p + 1)**2
+
+K = E(11428792286*i + 6312697112, 78608501229*i + 30552079595)
+
+ell = K.order()
+assert is_prime(ell)
+print(f"p     = {p}")
+print(f"p + 1 = {factor(p + 1)}")
+print(f"ord(K) = l = {ell}  ({ell.nbits()} bits, prime)")
+print(f"  Velu cost    ~ (l-1)/2 = {(ell - 1) // 2:,} steps")
+print(f"  sqrt(elu)    ~ sqrt(l) = {isqrt(ell):,} steps")
+print(f"  speed-up     ~ {(ell // 2) // isqrt(ell):,}x\n")
+
+
+# ---------------------------------------------------------------------------
+# sqrt(elu)
+# ---------------------------------------------------------------------------
+
+from sage.schemes.elliptic_curves.hom_velusqrt import EllipticCurveHom_velusqrt
+
+t0 = time.time()
+phi = EllipticCurveHom_velusqrt(E, K)
+print(f"[*] sqrt(elu) finished in {time.time() - t0:.1f}s")
+
+assert phi.degree() == ell, f"degree is {phi.degree()}, expected {ell}"
+assert phi(K) == phi.codomain()(0), "K is not in the kernel"
+
+Ecod = phi.codomain()
+j = Ecod.j_invariant()
+print(f"    codomain : {Ecod}")
+print(f"    j        = {j}")
+
+
+# ---------------------------------------------------------------------------
+# Verification
+# ---------------------------------------------------------------------------
+
+# 1. the isogeny depends only on the subgroup, not the chosen generator.
+#    (One extra generator only: each sqrt(elu) run costs ~2 minutes here.)
+c = 2
+assert gcd(c, ell) == 1
+t1 = time.time()
+psi = EllipticCurveHom_velusqrt(E, c * K)
+assert psi.degree() == ell
+assert psi.codomain().j_invariant() == j, f"generator [{c}]K gave a different codomain"
+print(f"[ok] the independent generator [{c}]K gives the same j  ({time.time() - t1:.1f}s)")
+
+# 2. the codomain must itself be supersingular of the same order
+assert Ecod.is_supersingular()
+assert Ecod.order() == (p + 1)**2
+print("[ok] codomain is supersingular with #E' = (p+1)^2")
+
+# 3. Weil pairing reads the degree off directly, independent of the curve model
+S, T = None, None
+cof = (p + 1) // 4
+while True:
+    S = cof * E.random_point()
+    T = cof * E.random_point()
+    if S.order() == 4 and T.order() == 4 and S.weil_pairing(T, 4).multiplicative_order() == 4:
+        break
+lhs = phi(S).weil_pairing(phi(T), 4)
+rhs = S.weil_pairing(T, 4)**ell
+assert lhs == rhs, "Weil pairing degree check failed"
+print(f"[ok] e_4(phi S, phi T) = e_4(S,T)^l   (l = {ell % 4} mod 4)")
+
+print()
+print(f"FLAG (j-invariant of the codomain) = {j}")
