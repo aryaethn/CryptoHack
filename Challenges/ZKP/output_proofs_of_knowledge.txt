@@ -1,0 +1,17 @@
+Warning: _curses.error: setupterm: could not find terminfo database
+
+Terminal features will not be available.  Consider setting TERM variable to your current terminal name (or xterm).
+[*] Checking for new versions of pwntools
+    To disable this functionality, set the contents of /Users/aria/.cache/.pwntools-cache-3.14/update to 'never' (old way).
+    Or add the following lines to ~/.pwn.conf or ~/.config/pwn.conf (or /etc/pwn.conf system-wide):
+        [update]
+        interval=never
+[*] You have the latest version of Pwntools (4.15.0)
+[x] Opening connection to socket.cryptohack.org on port 13425
+[x] Opening connection to socket.cryptohack.org on port 13425: Trying 134.122.111.232
+[+] Opening connection to socket.cryptohack.org on port 13425: Done
+Prove to me that you know an w such that g^w = y mod p. Send me a = g^r mod p for some random r in range(q)
+
+{'e': 1811169501327641164529501983087020951177194446004936057583719172848834366825714426590492274356280558834033460592827583960277563359564164300535808084262557, 'message': 'send me z = r + e*w mod q'}
+{'flag': 'crypto{sigma_protocol_complete!}', 'message': 'You convinced me you know an `w` such that g^w = y mod p!'}
+[*] Closed connection to socket.cryptohack.org port 13425
