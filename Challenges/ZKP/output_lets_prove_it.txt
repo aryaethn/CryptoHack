@@ -1,0 +1,36 @@
+Warning: _curses.error: setupterm: could not find terminfo database
+
+Terminal features will not be available.  Consider setting TERM variable to your current terminal name (or xterm).
+[x] Opening connection to socket.cryptohack.org on port 13430
+[x] Opening connection to socket.cryptohack.org on port 13430: Trying 134.122.111.232
+[+] Opening connection to socket.cryptohack.org on port 13430: Done
+This server is made to share proofs...
+That is the nonce for this instance: 77cc9330fae48ea9d488b05c28e9e8a0d40376956db1517455e72822e268b1
+nonce: 77cc9330fae48ea9d488b05c28e9e8a0d40376956db1517455e72822e268b1
+[*] fast trial-division search over 300 candidate seeds...
+[*] search done in 80.7s
+[*] deep-factoring the top 10 cofactors with Pollard rho/p-1 ...
+    seed=31 bits=105 (28.7s)
+    seed=53 bits=104 (27.3s)
+    seed=116 bits=74 (31.0s)
+    seed=213 bits=47 (31.2s)
+    seed=37 bits=46 (32.6s)
+    seed=46 bits=46 (32.6s)
+    seed=94 bits=45 (32.6s)
+    seed=5 bits=63 (30.6s)
+    seed=98 bits=44 (32.7s)
+    seed=191 bits=102 (28.7s)
+[*] selected seed=31, running coverage 105 bits
+[*] selected seed=53, running coverage 206 bits
+[*] selected seed=191, running coverage 307 bits
+[*] selected seed=116, running coverage 378 bits
+[*] selected seed=5, running coverage 435 bits
+[*] final selection: 5 primes, 435 bits of coverage
+[*] got y for seed=31
+[*] got y for seed=53
+[*] got y for seed=191
+[*] got y for seed=116
+[*] got y for seed=5
+[*] recovered FLAG mod 449 bits
+recovered flag: b'crypto{HNP_1s_a_b3aut1ful_Pr0blem_no?}'
+[*] Closed connection to socket.cryptohack.org port 13430
