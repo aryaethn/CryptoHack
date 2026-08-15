@@ -1,0 +1,13 @@
+Warning: _curses.error: setupterm: could not find terminfo database
+
+Terminal features will not be available.  Consider setting TERM variable to your current terminal name (or xterm).
+[x] Opening connection to socket.cryptohack.org on port 13415
+[x] Opening connection to socket.cryptohack.org on port 13415: Trying 134.122.111.232
+[+] Opening connection to socket.cryptohack.org on port 13415: Done
+Welcome! Have fun with this strange implementation...
+
+{"msg": "Internal z changed!"}
+
+{"msg": "crypto{don_t_let_useless_param_and_edge_cases_in_your_code}"}
+
+[*] Closed connection to socket.cryptohack.org port 13415
