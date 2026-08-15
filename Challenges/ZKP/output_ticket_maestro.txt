@@ -1,0 +1,15 @@
+hello: {"Hello":"Welcome to ticket maestro!"}
+got ticket proof: e6f635ddb54cee8b7b945f9a095a93c29740248f4b1c0293df6008f65c44fc8547147e7654b2a347ab2180770fe149ea05819b5a918298102e7de543ae6d9212b01b50a51f707b6b2c65459d5963c075d93ca28146894d4839a50d7304e2e326a6c0786202b5aac13518cd581b58a082ca7fb222b319af91937d0aeb3e344b9d
+redeemed, balance=9
+redeemed, balance=10
+redeemed, balance=11
+redeemed, balance=12
+redeemed, balance=13
+redeemed, balance=14
+redeemed, balance=15
+redeemed, balance=16
+redeemed, balance=17
+redeemed, balance=18
+redeemed, balance=19
+redeemed, balance=20
+flag response: {"Flag":"crypto{m4ll34b1l1ty_fl4w_0r_r3r4nd0m1s4t10n_f34tur3?}"}
