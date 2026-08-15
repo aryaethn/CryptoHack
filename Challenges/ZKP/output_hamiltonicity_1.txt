@@ -1,0 +1,23 @@
+Warning: _curses.error: setupterm: could not find terminfo database
+
+Terminal features will not be available.  Consider setting TERM variable to your current terminal name (or xterm).
+[x] Opening connection to archive.cryptohack.org on port 14635
+[x] Opening connection to archive.cryptohack.org on port 14635: Trying 178.62.74.206
+[+] Opening connection to archive.cryptohack.org on port 14635: Done
+prove to me that G has a hamiltonian cycle!
+
+round 0: accepted
+round 16: accepted
+round 32: accepted
+round 48: accepted
+round 64: accepted
+round 80: accepted
+round 96: accepted
+round 112: accepted
+[x] Receiving all data
+[x] Receiving all data: 100B
+[+] Receiving all data: Done (100B)
+[*] Closed connection to archive.cryptohack.org port 14635
+you've convinced me it has a hamiltonian path! Cool!
+b'crypto{not_hashing_entire_statement_is_bad}'
+
