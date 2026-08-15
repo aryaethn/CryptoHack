@@ -1,0 +1,51 @@
+Warning: _curses.error: setupterm: could not find terminfo database
+
+Terminal features will not be available.  Consider setting TERM variable to your current terminal name (or xterm).
+[x] Opening connection to socket.cryptohack.org on port 13431
+[x] Opening connection to socket.cryptohack.org on port 13431: Trying 134.122.111.232
+[+] Opening connection to socket.cryptohack.org on port 13431: Done
+This server is made to share proofs...
+That is the nonce for this instance: e40c1c19adc12292e7770b7f8929058e76e895a6111af9db3759696edeb3d7
+nonce: e40c1c19adc12292e7770b7f8929058e76e895a6111af9db3759696edeb3d7
+[*] fast trial-division search over 1000 candidate seeds...
+[*] search done in 275.2s
+[*] deep-factoring the top 30 cofactors with Pollard rho/p-1 ...
+    seed=425 bits=71 (62.2s)
+    seed=610 bits=62 (59.6s)
+    seed=398 bits=89 (64.6s)
+    seed=860 bits=57 (66.8s)
+    seed=735 bits=77 (62.4s)
+    seed=818 bits=75 (60.1s)
+    seed=990 bits=79 (60.1s)
+    seed=624 bits=55 (75.7s)
+    seed=166 bits=92 (23.4s)
+    seed=401 bits=124 (58.1s)
+    seed=825 bits=71 (0.0s)
+    seed=12 bits=84 (62.8s)
+    seed=769 bits=72 (0.2s)
+    seed=5 bits=84 (59.9s)
+    seed=460 bits=108 (58.0s)
+    seed=709 bits=49 (0.0s)
+    seed=512 bits=92 (59.2s)
+    seed=705 bits=48 (65.7s)
+    seed=128 bits=47 (64.1s)
+    seed=165 bits=47 (65.8s)
+    seed=276 bits=46 (63.9s)
+    seed=457 bits=46 (66.0s)
+    seed=804 bits=46 (63.2s)
+    seed=902 bits=76 (60.8s)
+    seed=197 bits=45 (67.2s)
+    seed=410 bits=83 (60.8s)
+    seed=822 bits=45 (64.7s)
+    seed=908 bits=45 (66.2s)
+    seed=975 bits=75 (0.9s)
+    seed=3 bits=90 (64.0s)
+[*] selected seed=401, running coverage 124 bits
+[*] selected seed=460, running coverage 228 bits
+[*] final selection: 2 primes, 228 bits of coverage
+Traceback (most recent call last):
+  File "/Users/aria/Desktop/CryptoHack/Challenges/ZKP/solve_lets_prove_it_again.py", line 155, in <module>
+    assert total_bits >= 312, "not enough smooth coverage, widen the search"
+           ^^^^^^^^^^^^^^^^^
+AssertionError: not enough smooth coverage, widen the search
+[*] Closed connection to socket.cryptohack.org port 13431
