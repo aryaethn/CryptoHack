@@ -1,0 +1,78 @@
+Warning: _curses.error: setupterm: could not find terminfo database
+
+Terminal features will not be available.  Consider setting TERM variable to your current terminal name (or xterm).
+[x] Opening connection to archive.cryptohack.org on port 3583
+[x] Opening connection to archive.cryptohack.org on port 3583: Trying 178.62.74.206
+[+] Opening connection to archive.cryptohack.org on port 3583: Done
+round 0: guess=1 attempts_used=3 -> wow you distinguished my witness!
+round 1: guess=1 attempts_used=7 -> wow you distinguished my witness!
+round 2: guess=0 attempts_used=4 -> wow you distinguished my witness!
+round 3: guess=1 attempts_used=5 -> wow you distinguished my witness!
+round 4: guess=0 attempts_used=2 -> wow you distinguished my witness!
+round 5: guess=0 attempts_used=2 -> wow you distinguished my witness!
+round 6: guess=1 attempts_used=1 -> wow you distinguished my witness!
+round 7: guess=0 attempts_used=4 -> wow you distinguished my witness!
+round 8: guess=1 attempts_used=5 -> wow you distinguished my witness!
+round 9: guess=0 attempts_used=4 -> wow you distinguished my witness!
+round 10: guess=1 attempts_used=7 -> wow you distinguished my witness!
+round 11: guess=0 attempts_used=1 -> wow you distinguished my witness!
+round 12: guess=0 attempts_used=2 -> wow you distinguished my witness!
+round 13: guess=0 attempts_used=2 -> wow you distinguished my witness!
+round 14: guess=1 attempts_used=9 -> wow you distinguished my witness!
+round 15: guess=1 attempts_used=5 -> wow you distinguished my witness!
+round 16: guess=1 attempts_used=1 -> wow you distinguished my witness!
+round 17: guess=1 attempts_used=3 -> wow you distinguished my witness!
+round 18: guess=0 attempts_used=1 -> wow you distinguished my witness!
+round 19: guess=1 attempts_used=1 -> wow you distinguished my witness!
+round 20: guess=1 attempts_used=5 -> wow you distinguished my witness!
+round 21: guess=0 attempts_used=2 -> wow you distinguished my witness!
+round 22: guess=1 attempts_used=2 -> wow you distinguished my witness!
+round 23: guess=1 attempts_used=2 -> wow you distinguished my witness!
+round 24: guess=1 attempts_used=2 -> wow you distinguished my witness!
+round 25: guess=0 attempts_used=4 -> wow you distinguished my witness!
+round 26: guess=1 attempts_used=1 -> wow you distinguished my witness!
+round 27: guess=0 attempts_used=2 -> wow you distinguished my witness!
+round 28: guess=1 attempts_used=2 -> wow you distinguished my witness!
+round 29: guess=1 attempts_used=7 -> wow you distinguished my witness!
+round 30: guess=1 attempts_used=16 -> wow you distinguished my witness!
+round 31: guess=0 attempts_used=8 -> wow you distinguished my witness!
+round 32: guess=1 attempts_used=1 -> wow you distinguished my witness!
+round 33: guess=0 attempts_used=2 -> wow you distinguished my witness!
+round 34: guess=0 attempts_used=2 -> wow you distinguished my witness!
+round 35: guess=1 attempts_used=1 -> wow you distinguished my witness!
+round 36: guess=1 attempts_used=1 -> wow you distinguished my witness!
+round 37: guess=1 attempts_used=2 -> wow you distinguished my witness!
+round 38: guess=1 attempts_used=6 -> wow you distinguished my witness!
+round 39: guess=0 attempts_used=4 -> wow you distinguished my witness!
+round 40: guess=0 attempts_used=11 -> wow you distinguished my witness!
+round 41: guess=1 attempts_used=3 -> wow you distinguished my witness!
+round 42: guess=1 attempts_used=1 -> wow you distinguished my witness!
+round 43: guess=1 attempts_used=1 -> wow you distinguished my witness!
+round 44: guess=0 attempts_used=2 -> wow you distinguished my witness!
+round 45: guess=1 attempts_used=1 -> wow you distinguished my witness!
+round 46: guess=1 attempts_used=1 -> wow you distinguished my witness!
+round 47: guess=1 attempts_used=3 -> wow you distinguished my witness!
+round 48: guess=0 attempts_used=2 -> wow you distinguished my witness!
+round 49: guess=0 attempts_used=6 -> wow you distinguished my witness!
+round 50: guess=1 attempts_used=7 -> wow you distinguished my witness!
+round 51: guess=0 attempts_used=4 -> wow you distinguished my witness!
+round 52: guess=1 attempts_used=1 -> wow you distinguished my witness!
+round 53: guess=1 attempts_used=1 -> wow you distinguished my witness!
+round 54: guess=0 attempts_used=2 -> wow you distinguished my witness!
+round 55: guess=1 attempts_used=3 -> wow you distinguished my witness!
+round 56: guess=1 attempts_used=9 -> wow you distinguished my witness!
+round 57: guess=1 attempts_used=1 -> wow you distinguished my witness!
+round 58: guess=0 attempts_used=3 -> wow you distinguished my witness!
+round 59: guess=0 attempts_used=5 -> wow you distinguished my witness!
+round 60: guess=1 attempts_used=1 -> wow you distinguished my witness!
+round 61: guess=0 attempts_used=6 -> wow you distinguished my witness!
+round 62: guess=1 attempts_used=2 -> wow you distinguished my witness!
+round 63: guess=1 attempts_used=16 -> wow you distinguished my witness!
+[x] Receiving all data
+[x] Receiving all data: 139B
+[+] Receiving all data: Done (139B)
+[*] Closed connection to archive.cryptohack.org port 3583
+do it 1 times more for flag!
+well done, you distinguished all the witnesses!
+b'crypto{fishy_fischlin_www.youtube.com/watch?v=tL6dcQEY62s}'
+
