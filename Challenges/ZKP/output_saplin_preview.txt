@@ -1,0 +1,11 @@
+Warning: _curses.error: setupterm: could not find terminfo database
+
+Terminal features will not be available.  Consider setting TERM variable to your current terminal name (or xterm).
+[x] Opening connection to socket.cryptohack.org on port 13414
+[x] Opening connection to socket.cryptohack.org on port 13414: Trying 134.122.111.232
+[+] Opening connection to socket.cryptohack.org on port 13414: Done
+Welcome to the saplins previews system implementation!
+
+{'msg': "[['745392296a2dd7d3fdad21321d485ec49fc7ff3bb3c3eab313becdebe3055472', 'a76200f73b35959da5cbbcebcab0d70c303f657079215735841bcf5dc6635ab4', '102ae855210e602f99247c81f05788128de563f19c5f3281f17d148be866f140', 'd5bdc8bdddc9bb62458b3f3d16e2f16a782e0c839973b12cc9d5995439ac6718', '81b9c7adf882e6af5d4ed1020d0eeb64850c731fa47300119111fa22226c6550', '3b78aeb357005eea235066089124a6ed246f7d027e0d9c508b2454de8c0c8f35', '44d6e6c982d0d8b52ee85033b8480377b15f3c6fb39e210d359a93ac5761642b', '95b9000a9e10623829e505beda606c872657232b09024389c13ee8e090e5579d']]"}
+{'msg': "crypto{M3rkle_tree_AND_race_condition_AND_replay_attack___that's_too_much}"}
+[*] Closed connection to socket.cryptohack.org port 13414
