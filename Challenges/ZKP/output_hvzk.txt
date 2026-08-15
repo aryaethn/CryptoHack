@@ -1,0 +1,11 @@
+Warning: _curses.error: setupterm: could not find terminfo database
+
+Terminal features will not be available.  Consider setting TERM variable to your current terminal name (or xterm).
+[x] Opening connection to socket.cryptohack.org on port 13427
+[x] Opening connection to socket.cryptohack.org on port 13427: Trying 134.122.111.232
+[+] Opening connection to socket.cryptohack.org on port 13427: Done
+Send me a transcript for my given `e` proving that you know the flag `w` such that y = g^w mod p
+
+{'e': 584455802153549290792168419017246387350285613136209630564322060392205579401739081586814348204045145895756631048336669102970034062741729357096612127058440, 'y': 18196487103940599966697300181583121403174794723946827594613708494770274787451033854621583329035266644157586019086089642250272782782120906514888868748529564, 'message': 'send me your transcript'}
+{'flag': 'crypto{so_honest_very_zero_knowledge}', 'message': 'You convinced me you know an `w` such that g^w = y mod p!'}
+[*] Closed connection to socket.cryptohack.org port 13427
