@@ -1,0 +1,14 @@
+Warning: _curses.error: setupterm: could not find terminfo database
+
+Terminal features will not be available.  Consider setting TERM variable to your current terminal name (or xterm).
+[x] Opening connection to archive.cryptohack.org on port 11840
+[x] Opening connection to archive.cryptohack.org on port 11840: Trying 178.62.74.206
+[+] Opening connection to archive.cryptohack.org on port 11840: Done
+[x] Receiving all data
+[x] Receiving all data: 1B
+[x] Receiving all data: 48B
+[+] Receiving all data: Done (48B)
+[*] Closed connection to archive.cryptohack.org port 11840
+ well done!
+b'crypto{sigma_protocols_compose!}'
+
