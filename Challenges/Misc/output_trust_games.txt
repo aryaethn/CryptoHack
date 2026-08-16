@@ -1,0 +1,12 @@
+Warning: _curses.error: setupterm: could not find terminfo database
+
+Terminal features will not be available.  Consider setting TERM variable to your current terminal name (or xterm).
+[x] Opening connection to socket.cryptohack.org on port 13396
+[x] Opening connection to socket.cryptohack.org on port 13396: Trying 134.122.111.232
+[+] Opening connection to socket.cryptohack.org on port 13396: Done
+Let's play a game, Player 37204967492a0678. If you can encrypt the plaintext that I will give you with my secret key, you will be worthy of my trust and a reward.
+
+{'msg': 'Try encrypting this plaintext with the given IV and my secret key!', 'plaintext': 'a3d357a739f984697d566f2ef56c2d7e', 'IV': '050625b2d89f8799a384190e849afa16'}
+Recovered key: e4a988d58bdaa5bb5afb767e966c0102
+{'msg': 'Here is a well deserved flag: crypto{L4ttice_C0mpl1ant_G4m3}'}
+[*] Closed connection to socket.cryptohack.org port 13396
