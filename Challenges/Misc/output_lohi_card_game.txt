@@ -1,0 +1,9 @@
+Warning: _curses.error: setupterm: could not find terminfo database
+
+Terminal features will not be available.  Consider setting TERM variable to your current terminal name (or xterm).
+[x] Opening connection to socket.cryptohack.org on port 13383
+[x] Opening connection to socket.cryptohack.org on port 13383: Trying 134.122.111.232
+[+] Opening connection to socket.cryptohack.org on port 13383: Done
+[+] Cracked RNG at round 33: mul=1055192955428456397 inc=369603516742055745
+{'msg': "You pulled a 21! Here's a flag: crypto{shuffl3_tr4ck1n6_i5_1t_l3g4l?}"}
+[*] Closed connection to socket.cryptohack.org port 13383
