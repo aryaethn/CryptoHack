@@ -1,0 +1,13 @@
+Warning: _curses.error: setupterm: could not find terminfo database
+
+Terminal features will not be available.  Consider setting TERM variable to your current terminal name (or xterm).
+[+] loaded 20000 precomputed rows in 0.04s
+[x] Opening connection to socket.cryptohack.org on port 13404
+[x] Opening connection to socket.cryptohack.org on port 13404: Trying 134.122.111.232
+[+] Opening connection to socket.cryptohack.org on port 13404: Done
+[+] got 2500 bytes of keystream at 2.90s
+[+] 10090 usable equations
+[+] elimination done at 7.49s, rank=8255/8256
+[+] recovered key at 12.44s: 81548885390678223817666173194905335220
+{'flag': 'crypto{f1lT3r3d_Lf$Rs_4r3_5ubt13_4nd_y0u_c4n_e4siLy_m1ss_s0m3th1ng}'}
+[*] Closed connection to socket.cryptohack.org port 13404
