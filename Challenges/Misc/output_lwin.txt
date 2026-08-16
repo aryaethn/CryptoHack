@@ -1,0 +1,3 @@
+[+] Berlekamp-Massey recovered linear complexity L = 384
+[+] recurrence verified against full observed stream
+crypto{minimal_polynomial_in_an_arbitrary_field}
