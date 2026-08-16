@@ -1,0 +1,19 @@
+Warning: _curses.error: setupterm: could not find terminfo database
+
+Terminal features will not be available.  Consider setting TERM variable to your current terminal name (or xterm).
+[x] Opening connection to socket.cryptohack.org on port 13384
+[x] Opening connection to socket.cryptohack.org on port 13384: Trying 134.122.111.232
+[+] Opening connection to socket.cryptohack.org on port 13384: Done
+{'sender': 'your_share', 'x': 6, 'y': '0xe0688952ba5f690c2fc6ef4d8f75cf7c51483d82ed6f0b18f1efda942b7ef332afb2bfeafce5c1cad97117190cd487d117d6bbe8a64652f646e93b8bfa283e6a27'}
+{'sender': 'mpeg', 'msg': "alright, let's go! I have x=2 and I'll start by secretly submitting my y point to our key-combiner", 'x': 2, 'y': '0x???'}
+{'sender': 'codecrafting', 'msg': 'submitting my point', 'x': 3, 'y': '0x???'}
+{'sender': 'RichGirlOnLSD', 'msg': 'sending in my x=4 point, so excited!', 'x': 4, 'y': '0x???'}
+{'sender': 'pogo', 'msg': 'sent my x=5 val, your turn next hyper', 'x': 5, 'y': '0x???'}
+{'sender': 'ssss-combine', 'privkey': '019df551625c22f2c3111d537c32b2f2926996cc715cd4c8834650bb1b26854002921716fc027c66a20ebda7f672ca3a5b91f1765a65b845ba4fc6753511ef13b898'}
+b'{"sender": "mpeg", "msg": "WTF, this privkey is invalid!"}\n'
+b'{"sender": "codecrafting", "msg": "hmm, hopefully someone just missed a character when pasting. let\'s try this one more time, and send in all our shares again. your turn hyper"}\n'
+{'sender': 'ssss-combine', 'privkey': '8b09cfc4696b91a1cc43372ac66ca36556a41499b495f28cc7ab193e32eadd30'}
+b'{"sender": "mpeg", "msg": "this privkey links to a wallet which only has $1k in it! another mistake by the game devs, what a surprise :("}\n'
+b'{"sender": "Your Bitcoin Wallet", "msg": "send me a JSON key \'privkey\' with the hex-encoded value of your private key to unlock the wallet"}\n'
+b'{"sender": "flag", "msg": "congrats, you fooled \'em with maths, crypto{shoulda_used_verifiable_secret_sharing}"}\n'
+[*] Closed connection to socket.cryptohack.org port 13384
