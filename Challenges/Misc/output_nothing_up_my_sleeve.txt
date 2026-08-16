@@ -1,0 +1,17 @@
+Warning: _curses.error: setupterm: could not find terminfo database
+
+Terminal features will not be available.  Consider setting TERM variable to your current terminal name (or xterm).
+[x] Opening connection to socket.cryptohack.org on port 13387
+[x] Opening connection to socket.cryptohack.org on port 13387: Trying 134.122.111.232
+[+] Opening connection to socket.cryptohack.org on port 13387: Done
+{'msg': 'Good evening, I will be your croupier for your first bets. The table is setup, place your bet!'}
+[*] Cycle observed (len=46), brute-forcing missing high bits...
+[*] 65536 raw candidates before live verification
+[*] round 48: 16263 candidates remain after digit 1
+[*] round 49: 1448 candidates remain after digit 2
+[*] round 50: 40 candidates remain after digit 3
+[*] round 51: 4 candidates remain after digit 4
+[*] round 52: 1 candidates remain after digit 5
+[+] RNG fully cracked
+FINAL: {'msg': "Congratulations Mr Jarecki! Here's a flag: crypto{No_Str1ngs_Att4ch3d}"}
+[*] Closed connection to socket.cryptohack.org port 13387
