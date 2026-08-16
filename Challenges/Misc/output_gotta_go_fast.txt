@@ -1,0 +1,11 @@
+Warning: _curses.error: setupterm: could not find terminfo database
+
+Terminal features will not be available.  Consider setting TERM variable to your current terminal name (or xterm).
+[x] Opening connection to socket.cryptohack.org on port 13372
+[x] Opening connection to socket.cryptohack.org on port 13372: Trying 134.122.111.232
+[+] Opening connection to socket.cryptohack.org on port 13372: Done
+Gotta go fast!
+
+{'encrypted_flag': '0cb669e6841e3d7e1235ecf16019e13b7660472621476f2fad50eaa0'}
+crypto{t00_f4st_t00_furi0u5}
+[*] Closed connection to socket.cryptohack.org port 13372
