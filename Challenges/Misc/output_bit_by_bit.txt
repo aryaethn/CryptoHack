@@ -1,0 +1,2 @@
+[+] parsed 399 ciphertexts
+crypto{s0m3_th1ng5_4r3_pr3served_4ft3r_encrypti0n}
