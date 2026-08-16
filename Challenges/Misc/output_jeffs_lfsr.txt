@@ -1,0 +1,4 @@
+[+] Candidate LFSR1 state found: 475115
+[+] Recovered key: 534932540467088023556
+[+] Verified: regenerated stream matches observed output exactly
+crypto{Geffe_generator_is_a_textbook_example_to_show_correlation_attacks_on_LFSR}
