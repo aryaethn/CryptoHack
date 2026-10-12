@@ -1,0 +1,5 @@
+[x] Opening connection to socket.cryptohack.org on port 13433
+[x] Opening connection to socket.cryptohack.org on port 13433: Trying 134.122.111.232
+[+] Opening connection to socket.cryptohack.org on port 13433: Done
+Signed in as k.barrymore@corp.bluerock.example. Flag: crypto{53v3n7y_7w0_by73_c31l1n6}
+[*] Closed connection to socket.cryptohack.org port 13433
