@@ -1,0 +1,5 @@
+[x] Opening connection to socket.cryptohack.org on port 13436
+[x] Opening connection to socket.cryptohack.org on port 13436: Trying 134.122.111.232
+[+] Opening connection to socket.cryptohack.org on port 13436: Done
+crypto{5urpr151n61y_fru17fu1_c0n53qu3nc35}
+[*] Closed connection to socket.cryptohack.org port 13436
